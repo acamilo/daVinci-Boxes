@@ -1,6 +1,0 @@
-#ifndef leds_H
-#define leds_H
-unsigned long int getAdc(int channel);
-void initADC();
-unsigned long int getVCCVolts();
-#endif

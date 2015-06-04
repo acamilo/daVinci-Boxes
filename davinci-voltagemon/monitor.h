@@ -35,8 +35,14 @@ void setLEDs();
 #define rail1_lower 125	 
 
 //24v
-#define rail2_upper 290	 
-#define rail2_lower 258	 
+#ifdef ECM
+    #define rail2_upper 435	 
+    #define rail2_lower 387	 
+#else
+    #define rail2_upper 290	 
+    #define rail2_lower 258	 
+#endif
+
 
 //12v
 #define rail3_upper 155	 
