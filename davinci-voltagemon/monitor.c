@@ -18,8 +18,9 @@ int main(void)
     const int msecsDelayPost = 10;
     initADC();
     initLEDs();
-    initTimer();
 
+
+    initTimer();
 
     while (1) {
 	checkRails();
@@ -120,9 +121,17 @@ OCR1A = 5;
 }
 
 int state=0;
+#ifdef __AVR_ATtiny261__
 ISR(TIMER1_COMPA_vect) {
+#else
+
+ISR(TIMER1_CMPA_vect){
+
+#endif
+
 	/*if (state & logic==NONE) {set_0_undir();}
 	else {set_0_dir();}*/
+
 
 	if (state & rail1==NONE) {set_0_undir();}
 	else {set_0_dir();}
@@ -133,6 +142,16 @@ ISR(TIMER1_COMPA_vect) {
 	if (state & rail3==NONE) {set_2_undir();}
 	else {set_2_dir();}
 #endif
+
+	setLED(0,OFF);
 	state = ~state;
 }
 
+void derpBlink(){
+	while(1){
+		_delay_ms(500);
+		setLED(0,RED);
+		_delay_ms(500);
+		setLED(0,GREEN);
+	}
+}

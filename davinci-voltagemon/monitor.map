@@ -126,7 +126,7 @@ END GROUP
 .rela.plt
  *(.rela.plt)
 
-.text           0x0000000000000000      0x3d2
+.text           0x0000000000000000      0x436
  *(.vectors)
  .vectors       0x0000000000000000       0x18 /opt/local/lib/gcc/avr/4.9.1/../../../../avr/lib/tiny-stack/crttn26.o
                 0x0000000000000000                __vectors
@@ -184,7 +184,6 @@ END GROUP
                 0x0000000000000034                __vector_10
                 0x0000000000000034                __bad_interrupt
                 0x0000000000000034                __vector_6
-                0x0000000000000034                __vector_3
                 0x0000000000000034                __vector_11
                 0x0000000000000034                __vector_7
                 0x0000000000000034                __vector_5
@@ -193,55 +192,56 @@ END GROUP
                 0x0000000000000034                __vector_2
                 0x0000000000000034                __vector_8
                 0x0000000000000034                __vector_1
- .text          0x0000000000000036      0x1f4 monitor.o
+ .text          0x0000000000000036      0x258 monitor.o
                 0x0000000000000036                checkRails
                 0x0000000000000110                setLEDs
                 0x000000000000017e                initTimer
-                0x0000000000000192                TIMER1_COMPA_vect
- .text          0x000000000000022a      0x144 leds.o
-                0x000000000000022a                setLED
-                0x0000000000000334                initLEDs
- .text          0x000000000000036e       0x48 adc.o
-                0x000000000000036e                initADC
-                0x0000000000000378                getAdc
-                0x00000000000003ac                getVCCVolts
- .text          0x00000000000003b6        0x0 /opt/local/lib/gcc/avr/4.9.1/tiny-stack/libgcc.a(_exit.o)
- .text          0x00000000000003b6        0x0 /opt/local/lib/gcc/avr/4.9.1/tiny-stack/libgcc.a(_clear_bss.o)
-                0x00000000000003b6                . = ALIGN (0x2)
+                0x0000000000000192                __vector_3
+                0x0000000000000254                derpBlink
+ .text          0x000000000000028e      0x144 leds.o
+                0x000000000000028e                setLED
+                0x0000000000000398                initLEDs
+ .text          0x00000000000003d2       0x48 adc.o
+                0x00000000000003d2                initADC
+                0x00000000000003dc                getAdc
+                0x0000000000000410                getVCCVolts
+ .text          0x000000000000041a        0x0 /opt/local/lib/gcc/avr/4.9.1/tiny-stack/libgcc.a(_exit.o)
+ .text          0x000000000000041a        0x0 /opt/local/lib/gcc/avr/4.9.1/tiny-stack/libgcc.a(_clear_bss.o)
+                0x000000000000041a                . = ALIGN (0x2)
  *(.text.*)
- .text.startup  0x00000000000003b6       0x18 monitor.o
-                0x00000000000003b6                main
+ .text.startup  0x000000000000041a       0x18 monitor.o
+                0x000000000000041a                main
  .text.libgcc.mul
-                0x00000000000003ce        0x0 /opt/local/lib/gcc/avr/4.9.1/tiny-stack/libgcc.a(_exit.o)
+                0x0000000000000432        0x0 /opt/local/lib/gcc/avr/4.9.1/tiny-stack/libgcc.a(_exit.o)
  .text.libgcc.div
-                0x00000000000003ce        0x0 /opt/local/lib/gcc/avr/4.9.1/tiny-stack/libgcc.a(_exit.o)
- .text.libgcc   0x00000000000003ce        0x0 /opt/local/lib/gcc/avr/4.9.1/tiny-stack/libgcc.a(_exit.o)
+                0x0000000000000432        0x0 /opt/local/lib/gcc/avr/4.9.1/tiny-stack/libgcc.a(_exit.o)
+ .text.libgcc   0x0000000000000432        0x0 /opt/local/lib/gcc/avr/4.9.1/tiny-stack/libgcc.a(_exit.o)
  .text.libgcc.prologue
-                0x00000000000003ce        0x0 /opt/local/lib/gcc/avr/4.9.1/tiny-stack/libgcc.a(_exit.o)
+                0x0000000000000432        0x0 /opt/local/lib/gcc/avr/4.9.1/tiny-stack/libgcc.a(_exit.o)
  .text.libgcc.builtins
-                0x00000000000003ce        0x0 /opt/local/lib/gcc/avr/4.9.1/tiny-stack/libgcc.a(_exit.o)
+                0x0000000000000432        0x0 /opt/local/lib/gcc/avr/4.9.1/tiny-stack/libgcc.a(_exit.o)
  .text.libgcc.fmul
-                0x00000000000003ce        0x0 /opt/local/lib/gcc/avr/4.9.1/tiny-stack/libgcc.a(_exit.o)
+                0x0000000000000432        0x0 /opt/local/lib/gcc/avr/4.9.1/tiny-stack/libgcc.a(_exit.o)
  .text.libgcc.fixed
-                0x00000000000003ce        0x0 /opt/local/lib/gcc/avr/4.9.1/tiny-stack/libgcc.a(_exit.o)
+                0x0000000000000432        0x0 /opt/local/lib/gcc/avr/4.9.1/tiny-stack/libgcc.a(_exit.o)
  .text.libgcc.mul
-                0x00000000000003ce        0x0 /opt/local/lib/gcc/avr/4.9.1/tiny-stack/libgcc.a(_clear_bss.o)
+                0x0000000000000432        0x0 /opt/local/lib/gcc/avr/4.9.1/tiny-stack/libgcc.a(_clear_bss.o)
  .text.libgcc.div
-                0x00000000000003ce        0x0 /opt/local/lib/gcc/avr/4.9.1/tiny-stack/libgcc.a(_clear_bss.o)
- .text.libgcc   0x00000000000003ce        0x0 /opt/local/lib/gcc/avr/4.9.1/tiny-stack/libgcc.a(_clear_bss.o)
+                0x0000000000000432        0x0 /opt/local/lib/gcc/avr/4.9.1/tiny-stack/libgcc.a(_clear_bss.o)
+ .text.libgcc   0x0000000000000432        0x0 /opt/local/lib/gcc/avr/4.9.1/tiny-stack/libgcc.a(_clear_bss.o)
  .text.libgcc.prologue
-                0x00000000000003ce        0x0 /opt/local/lib/gcc/avr/4.9.1/tiny-stack/libgcc.a(_clear_bss.o)
+                0x0000000000000432        0x0 /opt/local/lib/gcc/avr/4.9.1/tiny-stack/libgcc.a(_clear_bss.o)
  .text.libgcc.builtins
-                0x00000000000003ce        0x0 /opt/local/lib/gcc/avr/4.9.1/tiny-stack/libgcc.a(_clear_bss.o)
+                0x0000000000000432        0x0 /opt/local/lib/gcc/avr/4.9.1/tiny-stack/libgcc.a(_clear_bss.o)
  .text.libgcc.fmul
-                0x00000000000003ce        0x0 /opt/local/lib/gcc/avr/4.9.1/tiny-stack/libgcc.a(_clear_bss.o)
+                0x0000000000000432        0x0 /opt/local/lib/gcc/avr/4.9.1/tiny-stack/libgcc.a(_clear_bss.o)
  .text.libgcc.fixed
-                0x00000000000003ce        0x0 /opt/local/lib/gcc/avr/4.9.1/tiny-stack/libgcc.a(_clear_bss.o)
-                0x00000000000003ce                . = ALIGN (0x2)
+                0x0000000000000432        0x0 /opt/local/lib/gcc/avr/4.9.1/tiny-stack/libgcc.a(_clear_bss.o)
+                0x0000000000000432                . = ALIGN (0x2)
  *(.fini9)
- .fini9         0x00000000000003ce        0x0 /opt/local/lib/gcc/avr/4.9.1/tiny-stack/libgcc.a(_exit.o)
-                0x00000000000003ce                exit
-                0x00000000000003ce                _exit
+ .fini9         0x0000000000000432        0x0 /opt/local/lib/gcc/avr/4.9.1/tiny-stack/libgcc.a(_exit.o)
+                0x0000000000000432                exit
+                0x0000000000000432                _exit
  *(.fini9)
  *(.fini8)
  *(.fini8)
@@ -260,11 +260,11 @@ END GROUP
  *(.fini1)
  *(.fini1)
  *(.fini0)
- .fini0         0x00000000000003ce        0x4 /opt/local/lib/gcc/avr/4.9.1/tiny-stack/libgcc.a(_exit.o)
+ .fini0         0x0000000000000432        0x4 /opt/local/lib/gcc/avr/4.9.1/tiny-stack/libgcc.a(_exit.o)
  *(.fini0)
-                0x00000000000003d2                _etext = .
+                0x0000000000000436                _etext = .
 
-.data           0x0000000000800060        0x0 load address 0x00000000000003d2
+.data           0x0000000000800060        0x0 load address 0x0000000000000436
                 0x0000000000800060                PROVIDE (__data_start, .)
  *(.data)
  .data          0x0000000000800060        0x0 /opt/local/lib/gcc/avr/4.9.1/../../../../avr/lib/tiny-stack/crttn26.o
@@ -299,8 +299,8 @@ END GROUP
                 0x0000000000800066                rail1
                 0x0000000000800068                logic
                 0x000000000080006a                PROVIDE (__bss_end, .)
-                0x00000000000003d2                __data_load_start = LOADADDR (.data)
-                0x00000000000003d2                __data_load_end = (__data_load_start + SIZEOF (.data))
+                0x0000000000000436                __data_load_start = LOADADDR (.data)
+                0x0000000000000436                __data_load_end = (__data_load_start + SIZEOF (.data))
 
 .noinit         0x000000000080006a        0x0
                 0x000000000080006a                PROVIDE (__noinit_start, .)
@@ -325,21 +325,21 @@ END GROUP
 .signature
  *(.signature*)
 
-.stab           0x0000000000000000     0x1278
+.stab           0x0000000000000000     0x132c
  *(.stab)
- .stab          0x0000000000000000      0x918 monitor.o
- .stab          0x0000000000000918      0x45c leds.o
+ .stab          0x0000000000000000      0x9cc monitor.o
+ .stab          0x00000000000009cc      0x45c leds.o
                                         0x648 (size before relaxing)
- .stab          0x0000000000000d74      0x3e4 adc.o
+ .stab          0x0000000000000e28      0x3e4 adc.o
                                         0x600 (size before relaxing)
- .stab          0x0000000000001158       0x6c /opt/local/lib/gcc/avr/4.9.1/tiny-stack/libgcc.a(_exit.o)
+ .stab          0x000000000000120c       0x6c /opt/local/lib/gcc/avr/4.9.1/tiny-stack/libgcc.a(_exit.o)
                                          0x78 (size before relaxing)
- .stab          0x00000000000011c4       0xb4 /opt/local/lib/gcc/avr/4.9.1/tiny-stack/libgcc.a(_clear_bss.o)
+ .stab          0x0000000000001278       0xb4 /opt/local/lib/gcc/avr/4.9.1/tiny-stack/libgcc.a(_clear_bss.o)
                                          0xc0 (size before relaxing)
 
-.stabstr        0x0000000000000000      0xf95
+.stabstr        0x0000000000000000      0xfa0
  *(.stabstr)
- .stabstr       0x0000000000000000      0xf95 monitor.o
+ .stabstr       0x0000000000000000      0xfa0 monitor.o
 
 .stab.excl
  *(.stab.excl)

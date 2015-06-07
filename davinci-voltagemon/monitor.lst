@@ -3,25 +3,25 @@ monitor.elf:     file format elf32-avr
 
 Sections:
 Idx Name          Size      VMA       LMA       File off  Algn
-  0 .text         000003d2  00000000  00000000  00000094  2**1
+  0 .text         00000436  00000000  00000000  00000094  2**1
                   CONTENTS, ALLOC, LOAD, READONLY, CODE
-  1 .data         00000000  00800060  000003d2  00000466  2**0
+  1 .data         00000000  00800060  00000436  000004ca  2**0
                   CONTENTS, ALLOC, LOAD, DATA
-  2 .bss          0000000a  00800060  00800060  00000466  2**0
+  2 .bss          0000000a  00800060  00800060  000004ca  2**0
                   ALLOC
-  3 .stab         00001278  00000000  00000000  00000468  2**2
+  3 .stab         0000132c  00000000  00000000  000004cc  2**2
                   CONTENTS, READONLY, DEBUGGING
-  4 .stabstr      00000f95  00000000  00000000  000016e0  2**0
+  4 .stabstr      00000fa0  00000000  00000000  000017f8  2**0
                   CONTENTS, READONLY, DEBUGGING
-  5 .comment      00000011  00000000  00000000  00002675  2**0
+  5 .comment      00000011  00000000  00000000  00002798  2**0
                   CONTENTS, READONLY
-  6 .debug_info   000002dc  00000000  00000000  00002686  2**0
+  6 .debug_info   000002dc  00000000  00000000  000027a9  2**0
                   CONTENTS, READONLY, DEBUGGING
-  7 .debug_abbrev 000002b6  00000000  00000000  00002962  2**0
+  7 .debug_abbrev 000002b6  00000000  00000000  00002a85  2**0
                   CONTENTS, READONLY, DEBUGGING
-  8 .debug_line   0000001d  00000000  00000000  00002c18  2**0
+  8 .debug_line   0000001d  00000000  00000000  00002d3b  2**0
                   CONTENTS, READONLY, DEBUGGING
-  9 .debug_str    000000fa  00000000  00000000  00002c35  2**0
+  9 .debug_str    000000fa  00000000  00000000  00002d58  2**0
                   CONTENTS, READONLY, DEBUGGING
 
 Disassembly of section .text:
@@ -30,7 +30,7 @@ Disassembly of section .text:
    0:	0b c0       	rjmp	.+22     	; 0x18 <__ctors_end>
    2:	18 c0       	rjmp	.+48     	; 0x34 <__bad_interrupt>
    4:	17 c0       	rjmp	.+46     	; 0x34 <__bad_interrupt>
-   6:	16 c0       	rjmp	.+44     	; 0x34 <__bad_interrupt>
+   6:	c5 c0       	rjmp	.+394    	; 0x192 <__vector_3>
    8:	15 c0       	rjmp	.+42     	; 0x34 <__bad_interrupt>
    a:	14 c0       	rjmp	.+40     	; 0x34 <__bad_interrupt>
    c:	13 c0       	rjmp	.+38     	; 0x34 <__bad_interrupt>
@@ -59,8 +59,8 @@ Disassembly of section .text:
   2a:	aa 36       	cpi	r26, 0x6A	; 106
   2c:	b1 07       	cpc	r27, r17
   2e:	e1 f7       	brne	.-8      	; 0x28 <.do_clear_bss_loop>
-  30:	c2 d1       	rcall	.+900    	; 0x3b6 <main>
-  32:	cd c1       	rjmp	.+922    	; 0x3ce <_exit>
+  30:	f4 d1       	rcall	.+1000   	; 0x41a <main>
+  32:	ff c1       	rjmp	.+1022   	; 0x432 <_exit>
 
 00000034 <__bad_interrupt>:
   34:	e5 cf       	rjmp	.-54     	; 0x0 <__vectors>
@@ -82,11 +82,11 @@ void checkRails(){
 		unsigned long int voltage = getAdc(0);
   3a:	80 e0       	ldi	r24, 0x00	; 0
   3c:	90 e0       	ldi	r25, 0x00	; 0
-  3e:	9c d1       	rcall	.+824    	; 0x378 <getAdc>
+  3e:	ce d1       	rcall	.+924    	; 0x3dc <getAdc>
 		voltage = getAdc(0);
   40:	80 e0       	ldi	r24, 0x00	; 0
   42:	90 e0       	ldi	r25, 0x00	; 0
-  44:	99 d1       	rcall	.+818    	; 0x378 <getAdc>
+  44:	cb d1       	rcall	.+918    	; 0x3dc <getAdc>
 		if (voltage >= rail1_upper) { rail1  = HIGH; }
   46:	6b 39       	cpi	r22, 0x9B	; 155
   48:	71 05       	cpc	r23, r1
@@ -138,7 +138,7 @@ void checkRails(){
 		voltage = getAdc(1);
   a4:	81 e0       	ldi	r24, 0x01	; 1
   a6:	90 e0       	ldi	r25, 0x00	; 0
-  a8:	67 d1       	rcall	.+718    	; 0x378 <getAdc>
+  a8:	99 d1       	rcall	.+818    	; 0x3dc <getAdc>
 		if (voltage >= rail2_upper) { rail2  = HIGH; }
   aa:	62 32       	cpi	r22, 0x22	; 34
   ac:	21 e0       	ldi	r18, 0x01	; 1
@@ -237,7 +237,7 @@ void checkRails(){
 		case HIGH: setLED(0,YELLOW);break;
  13a:	80 e0       	ldi	r24, 0x00	; 0
  13c:	90 e0       	ldi	r25, 0x00	; 0
- 13e:	75 d0       	rcall	.+234    	; 0x22a <setLED>
+ 13e:	a7 d0       	rcall	.+334    	; 0x28e <setLED>
 	}
 
 // force 1,0 off
@@ -277,7 +277,7 @@ void checkRails(){
 		case HIGH: setLED(1,YELLOW);break;
  16a:	81 e0       	ldi	r24, 0x01	; 1
  16c:	90 e0       	ldi	r25, 0x00	; 0
- 16e:	5d d0       	rcall	.+186    	; 0x22a <setLED>
+ 16e:	8f d0       	rcall	.+286    	; 0x28e <setLED>
 	}
 #endif
 
@@ -320,11 +320,13 @@ OCR1A = 5;
  18e:	78 94       	sei
  190:	08 95       	ret
 
-00000192 <TIMER1_COMPA_vect>:
-}
-
+00000192 <__vector_3>:
 int state=0;
+#ifdef __AVR_ATtiny261__
 ISR(TIMER1_COMPA_vect) {
+#else
+
+ISR(TIMER1_CMPA_vect){
  192:	1f 92       	push	r1
  194:	0f 92       	push	r0
  196:	0f b6       	in	r0, 0x3f	; 63
@@ -332,398 +334,463 @@ ISR(TIMER1_COMPA_vect) {
  19a:	11 24       	eor	r1, r1
  19c:	2f 93       	push	r18
  19e:	3f 93       	push	r19
- 1a0:	8f 93       	push	r24
- 1a2:	9f 93       	push	r25
+ 1a0:	4f 93       	push	r20
+ 1a2:	5f 93       	push	r21
+ 1a4:	6f 93       	push	r22
+ 1a6:	7f 93       	push	r23
+ 1a8:	8f 93       	push	r24
+ 1aa:	9f 93       	push	r25
+ 1ac:	af 93       	push	r26
+ 1ae:	bf 93       	push	r27
+ 1b0:	ef 93       	push	r30
+ 1b2:	ff 93       	push	r31
+
 	/*if (state & logic==NONE) {set_0_undir();}
 	else {set_0_dir();}*/
 
+
 	if (state & rail1==NONE) {set_0_undir();}
- 1a4:	21 e0       	ldi	r18, 0x01	; 1
- 1a6:	30 e0       	ldi	r19, 0x00	; 0
- 1a8:	80 91 66 00 	lds	r24, 0x0066
- 1ac:	90 91 67 00 	lds	r25, 0x0067
- 1b0:	89 2b       	or	r24, r25
- 1b2:	11 f0       	breq	.+4      	; 0x1b8 <TIMER1_COMPA_vect+0x26>
- 1b4:	20 e0       	ldi	r18, 0x00	; 0
+ 1b4:	21 e0       	ldi	r18, 0x01	; 1
  1b6:	30 e0       	ldi	r19, 0x00	; 0
- 1b8:	80 91 60 00 	lds	r24, 0x0060
- 1bc:	90 91 61 00 	lds	r25, 0x0061
- 1c0:	82 23       	and	r24, r18
- 1c2:	93 23       	and	r25, r19
- 1c4:	89 2b       	or	r24, r25
- 1c6:	19 f0       	breq	.+6      	; 0x1ce <TIMER1_COMPA_vect+0x3c>
- 1c8:	8a b3       	in	r24, 0x1a	; 26
- 1ca:	8f 7c       	andi	r24, 0xCF	; 207
- 1cc:	02 c0       	rjmp	.+4      	; 0x1d2 <TIMER1_COMPA_vect+0x40>
+ 1b8:	80 91 66 00 	lds	r24, 0x0066
+ 1bc:	90 91 67 00 	lds	r25, 0x0067
+ 1c0:	89 2b       	or	r24, r25
+ 1c2:	11 f0       	breq	.+4      	; 0x1c8 <__vector_3+0x36>
+ 1c4:	20 e0       	ldi	r18, 0x00	; 0
+ 1c6:	30 e0       	ldi	r19, 0x00	; 0
+ 1c8:	80 91 60 00 	lds	r24, 0x0060
+ 1cc:	90 91 61 00 	lds	r25, 0x0061
+ 1d0:	82 23       	and	r24, r18
+ 1d2:	93 23       	and	r25, r19
+ 1d4:	89 2b       	or	r24, r25
+ 1d6:	19 f0       	breq	.+6      	; 0x1de <__vector_3+0x4c>
+ 1d8:	8a b3       	in	r24, 0x1a	; 26
+ 1da:	8f 7c       	andi	r24, 0xCF	; 207
+ 1dc:	02 c0       	rjmp	.+4      	; 0x1e2 <__vector_3+0x50>
 	else {set_0_dir();}
- 1ce:	8a b3       	in	r24, 0x1a	; 26
- 1d0:	80 63       	ori	r24, 0x30	; 48
- 1d2:	8a bb       	out	0x1a, r24	; 26
+ 1de:	8a b3       	in	r24, 0x1a	; 26
+ 1e0:	80 63       	ori	r24, 0x30	; 48
+ 1e2:	8a bb       	out	0x1a, r24	; 26
 
 	if (state & rail2==NONE) {set_1_undir();}
- 1d4:	21 e0       	ldi	r18, 0x01	; 1
- 1d6:	30 e0       	ldi	r19, 0x00	; 0
- 1d8:	80 91 62 00 	lds	r24, 0x0062
- 1dc:	90 91 63 00 	lds	r25, 0x0063
- 1e0:	89 2b       	or	r24, r25
- 1e2:	11 f0       	breq	.+4      	; 0x1e8 <TIMER1_COMPA_vect+0x56>
- 1e4:	20 e0       	ldi	r18, 0x00	; 0
+ 1e4:	21 e0       	ldi	r18, 0x01	; 1
  1e6:	30 e0       	ldi	r19, 0x00	; 0
- 1e8:	80 91 60 00 	lds	r24, 0x0060
- 1ec:	90 91 61 00 	lds	r25, 0x0061
- 1f0:	82 23       	and	r24, r18
- 1f2:	93 23       	and	r25, r19
- 1f4:	89 2b       	or	r24, r25
- 1f6:	19 f0       	breq	.+6      	; 0x1fe <TIMER1_COMPA_vect+0x6c>
- 1f8:	8a b3       	in	r24, 0x1a	; 26
- 1fa:	8f 73       	andi	r24, 0x3F	; 63
- 1fc:	02 c0       	rjmp	.+4      	; 0x202 <TIMER1_COMPA_vect+0x70>
+ 1e8:	80 91 62 00 	lds	r24, 0x0062
+ 1ec:	90 91 63 00 	lds	r25, 0x0063
+ 1f0:	89 2b       	or	r24, r25
+ 1f2:	11 f0       	breq	.+4      	; 0x1f8 <__vector_3+0x66>
+ 1f4:	20 e0       	ldi	r18, 0x00	; 0
+ 1f6:	30 e0       	ldi	r19, 0x00	; 0
+ 1f8:	80 91 60 00 	lds	r24, 0x0060
+ 1fc:	90 91 61 00 	lds	r25, 0x0061
+ 200:	82 23       	and	r24, r18
+ 202:	93 23       	and	r25, r19
+ 204:	89 2b       	or	r24, r25
+ 206:	19 f0       	breq	.+6      	; 0x20e <__vector_3+0x7c>
+ 208:	8a b3       	in	r24, 0x1a	; 26
+ 20a:	8f 73       	andi	r24, 0x3F	; 63
+ 20c:	02 c0       	rjmp	.+4      	; 0x212 <__vector_3+0x80>
 	else {set_1_dir();}
- 1fe:	8a b3       	in	r24, 0x1a	; 26
- 200:	80 6c       	ori	r24, 0xC0	; 192
- 202:	8a bb       	out	0x1a, r24	; 26
+ 20e:	8a b3       	in	r24, 0x1a	; 26
+ 210:	80 6c       	ori	r24, 0xC0	; 192
+ 212:	8a bb       	out	0x1a, r24	; 26
 #ifdef master
 	if (state & rail3==NONE) {set_2_undir();}
 	else {set_2_dir();}
 #endif
+
+	setLED(0,OFF);
+ 214:	60 e0       	ldi	r22, 0x00	; 0
+ 216:	70 e0       	ldi	r23, 0x00	; 0
+ 218:	80 e0       	ldi	r24, 0x00	; 0
+ 21a:	90 e0       	ldi	r25, 0x00	; 0
+ 21c:	38 d0       	rcall	.+112    	; 0x28e <setLED>
 	state = ~state;
- 204:	80 91 60 00 	lds	r24, 0x0060
- 208:	90 91 61 00 	lds	r25, 0x0061
- 20c:	80 95       	com	r24
- 20e:	90 95       	com	r25
- 210:	90 93 61 00 	sts	0x0061, r25
- 214:	80 93 60 00 	sts	0x0060, r24
+ 21e:	80 91 60 00 	lds	r24, 0x0060
+ 222:	90 91 61 00 	lds	r25, 0x0061
+ 226:	80 95       	com	r24
+ 228:	90 95       	com	r25
+ 22a:	90 93 61 00 	sts	0x0061, r25
+ 22e:	80 93 60 00 	sts	0x0060, r24
 }
- 218:	9f 91       	pop	r25
- 21a:	8f 91       	pop	r24
- 21c:	3f 91       	pop	r19
- 21e:	2f 91       	pop	r18
- 220:	0f 90       	pop	r0
- 222:	0f be       	out	0x3f, r0	; 63
- 224:	0f 90       	pop	r0
- 226:	1f 90       	pop	r1
- 228:	18 95       	reti
+ 232:	ff 91       	pop	r31
+ 234:	ef 91       	pop	r30
+ 236:	bf 91       	pop	r27
+ 238:	af 91       	pop	r26
+ 23a:	9f 91       	pop	r25
+ 23c:	8f 91       	pop	r24
+ 23e:	7f 91       	pop	r23
+ 240:	6f 91       	pop	r22
+ 242:	5f 91       	pop	r21
+ 244:	4f 91       	pop	r20
+ 246:	3f 91       	pop	r19
+ 248:	2f 91       	pop	r18
+ 24a:	0f 90       	pop	r0
+ 24c:	0f be       	out	0x3f, r0	; 63
+ 24e:	0f 90       	pop	r0
+ 250:	1f 90       	pop	r1
+ 252:	18 95       	reti
 
-0000022a <setLED>:
-#include "leds.h"
-#include <avr/io.h>
-
-void setLED(int led, led_state color){
-	switch(led){
- 22a:	81 30       	cpi	r24, 0x01	; 1
- 22c:	91 05       	cpc	r25, r1
- 22e:	59 f1       	breq	.+86     	; 0x286 <setLED+0x5c>
- 230:	1c f4       	brge	.+6      	; 0x238 <setLED+0xe>
- 232:	89 2b       	or	r24, r25
- 234:	49 f0       	breq	.+18     	; 0x248 <setLED+0x1e>
- 236:	08 95       	ret
- 238:	82 30       	cpi	r24, 0x02	; 2
- 23a:	91 05       	cpc	r25, r1
- 23c:	09 f4       	brne	.+2      	; 0x240 <setLED+0x16>
- 23e:	41 c0       	rjmp	.+130    	; 0x2c2 <setLED+0x98>
- 240:	03 97       	sbiw	r24, 0x03	; 3
- 242:	09 f4       	brne	.+2      	; 0x246 <setLED+0x1c>
- 244:	5c c0       	rjmp	.+184    	; 0x2fe <setLED+0xd4>
- 246:	08 95       	ret
-		case 0:
-			switch(color){
- 248:	61 30       	cpi	r22, 0x01	; 1
- 24a:	71 05       	cpc	r23, r1
- 24c:	81 f0       	breq	.+32     	; 0x26e <setLED+0x44>
- 24e:	38 f0       	brcs	.+14     	; 0x25e <setLED+0x34>
- 250:	62 30       	cpi	r22, 0x02	; 2
- 252:	71 05       	cpc	r23, r1
- 254:	39 f0       	breq	.+14     	; 0x264 <setLED+0x3a>
- 256:	63 30       	cpi	r22, 0x03	; 3
- 258:	71 05       	cpc	r23, r1
- 25a:	71 f0       	breq	.+28     	; 0x278 <setLED+0x4e>
- 25c:	08 95       	ret
-				case OFF: set_0_OFF(); break;
- 25e:	8b b3       	in	r24, 0x1b	; 27
- 260:	8f 7c       	andi	r24, 0xCF	; 207
- 262:	0f c0       	rjmp	.+30     	; 0x282 <setLED+0x58>
-				case RED: set_0_RED();break;
- 264:	8b b3       	in	r24, 0x1b	; 27
- 266:	8f 7c       	andi	r24, 0xCF	; 207
- 268:	8b bb       	out	0x1b, r24	; 27
- 26a:	dd 9a       	sbi	0x1b, 5	; 27
- 26c:	08 95       	ret
-				case GREEN: set_0_GRN(); break;
- 26e:	8b b3       	in	r24, 0x1b	; 27
- 270:	8f 7c       	andi	r24, 0xCF	; 207
- 272:	8b bb       	out	0x1b, r24	; 27
- 274:	dc 9a       	sbi	0x1b, 4	; 27
- 276:	08 95       	ret
-				case YELLOW: set_0_YEL(); break;
- 278:	8b b3       	in	r24, 0x1b	; 27
- 27a:	8f 7c       	andi	r24, 0xCF	; 207
- 27c:	8b bb       	out	0x1b, r24	; 27
- 27e:	8b b3       	in	r24, 0x1b	; 27
- 280:	80 63       	ori	r24, 0x30	; 48
- 282:	8b bb       	out	0x1b, r24	; 27
- 284:	08 95       	ret
-			}
-		break;
-		case 1:
-			switch(color){
- 286:	61 30       	cpi	r22, 0x01	; 1
- 288:	71 05       	cpc	r23, r1
- 28a:	81 f0       	breq	.+32     	; 0x2ac <setLED+0x82>
- 28c:	38 f0       	brcs	.+14     	; 0x29c <setLED+0x72>
- 28e:	62 30       	cpi	r22, 0x02	; 2
- 290:	71 05       	cpc	r23, r1
- 292:	39 f0       	breq	.+14     	; 0x2a2 <setLED+0x78>
- 294:	63 30       	cpi	r22, 0x03	; 3
- 296:	71 05       	cpc	r23, r1
- 298:	71 f0       	breq	.+28     	; 0x2b6 <setLED+0x8c>
- 29a:	08 95       	ret
-				case OFF: set_1_OFF(); break;
- 29c:	8b b3       	in	r24, 0x1b	; 27
- 29e:	8f 73       	andi	r24, 0x3F	; 63
- 2a0:	f0 cf       	rjmp	.-32     	; 0x282 <setLED+0x58>
-				case RED: set_1_RED();break;
- 2a2:	8b b3       	in	r24, 0x1b	; 27
- 2a4:	8f 73       	andi	r24, 0x3F	; 63
- 2a6:	8b bb       	out	0x1b, r24	; 27
- 2a8:	df 9a       	sbi	0x1b, 7	; 27
- 2aa:	08 95       	ret
-				case GREEN: set_1_GRN(); break;
- 2ac:	8b b3       	in	r24, 0x1b	; 27
- 2ae:	8f 73       	andi	r24, 0x3F	; 63
- 2b0:	8b bb       	out	0x1b, r24	; 27
- 2b2:	de 9a       	sbi	0x1b, 6	; 27
- 2b4:	08 95       	ret
-				case YELLOW: set_1_YEL(); break;
- 2b6:	8b b3       	in	r24, 0x1b	; 27
- 2b8:	8f 73       	andi	r24, 0x3F	; 63
- 2ba:	8b bb       	out	0x1b, r24	; 27
- 2bc:	8b b3       	in	r24, 0x1b	; 27
- 2be:	80 6c       	ori	r24, 0xC0	; 192
- 2c0:	e0 cf       	rjmp	.-64     	; 0x282 <setLED+0x58>
-			}
-
-		break;
-		case 2:
-			switch(color){
- 2c2:	61 30       	cpi	r22, 0x01	; 1
- 2c4:	71 05       	cpc	r23, r1
- 2c6:	81 f0       	breq	.+32     	; 0x2e8 <setLED+0xbe>
- 2c8:	38 f0       	brcs	.+14     	; 0x2d8 <setLED+0xae>
- 2ca:	62 30       	cpi	r22, 0x02	; 2
- 2cc:	71 05       	cpc	r23, r1
- 2ce:	39 f0       	breq	.+14     	; 0x2de <setLED+0xb4>
- 2d0:	63 30       	cpi	r22, 0x03	; 3
- 2d2:	71 05       	cpc	r23, r1
- 2d4:	71 f0       	breq	.+28     	; 0x2f2 <setLED+0xc8>
- 2d6:	08 95       	ret
-				case OFF: set_2_OFF(); break;
- 2d8:	88 b3       	in	r24, 0x18	; 24
- 2da:	87 7e       	andi	r24, 0xE7	; 231
- 2dc:	29 c0       	rjmp	.+82     	; 0x330 <setLED+0x106>
-				case RED: set_2_RED();break;
- 2de:	88 b3       	in	r24, 0x18	; 24
- 2e0:	87 7e       	andi	r24, 0xE7	; 231
- 2e2:	88 bb       	out	0x18, r24	; 24
- 2e4:	c4 9a       	sbi	0x18, 4	; 24
- 2e6:	08 95       	ret
-				case GREEN: set_2_GRN(); break;
- 2e8:	88 b3       	in	r24, 0x18	; 24
- 2ea:	87 7e       	andi	r24, 0xE7	; 231
- 2ec:	88 bb       	out	0x18, r24	; 24
- 2ee:	c3 9a       	sbi	0x18, 3	; 24
- 2f0:	08 95       	ret
-				case YELLOW: set_2_YEL(); break;
- 2f2:	88 b3       	in	r24, 0x18	; 24
- 2f4:	87 7e       	andi	r24, 0xE7	; 231
- 2f6:	88 bb       	out	0x18, r24	; 24
- 2f8:	88 b3       	in	r24, 0x18	; 24
- 2fa:	88 61       	ori	r24, 0x18	; 24
- 2fc:	19 c0       	rjmp	.+50     	; 0x330 <setLED+0x106>
-			}
-		break;
-		case 3:
-			switch(color){
- 2fe:	61 30       	cpi	r22, 0x01	; 1
- 300:	71 05       	cpc	r23, r1
- 302:	81 f0       	breq	.+32     	; 0x324 <setLED+0xfa>
- 304:	38 f0       	brcs	.+14     	; 0x314 <setLED+0xea>
- 306:	62 30       	cpi	r22, 0x02	; 2
- 308:	71 05       	cpc	r23, r1
- 30a:	39 f0       	breq	.+14     	; 0x31a <setLED+0xf0>
- 30c:	63 30       	cpi	r22, 0x03	; 3
- 30e:	71 05       	cpc	r23, r1
- 310:	61 f0       	breq	.+24     	; 0x32a <setLED+0x100>
- 312:	08 95       	ret
-				case OFF: set_3_OFF(); break;
- 314:	88 b3       	in	r24, 0x18	; 24
- 316:	8f 79       	andi	r24, 0x9F	; 159
- 318:	0b c0       	rjmp	.+22     	; 0x330 <setLED+0x106>
-				case RED: set_3_RED();break;
- 31a:	88 b3       	in	r24, 0x18	; 24
- 31c:	8f 79       	andi	r24, 0x9F	; 159
- 31e:	88 bb       	out	0x18, r24	; 24
- 320:	c6 9a       	sbi	0x18, 6	; 24
- 322:	08 95       	ret
-				case GREEN: set_3_GRN(); break;
- 324:	c6 98       	cbi	0x18, 6	; 24
- 326:	c5 9a       	sbi	0x18, 5	; 24
- 328:	08 95       	ret
-				case YELLOW: set_3_YEL(); break;
- 32a:	c6 98       	cbi	0x18, 6	; 24
- 32c:	88 b3       	in	r24, 0x18	; 24
- 32e:	80 66       	ori	r24, 0x60	; 96
- 330:	88 bb       	out	0x18, r24	; 24
- 332:	08 95       	ret
-
-00000334 <initLEDs>:
-	
-}
-
-
-void initLEDs(){
-    set_1_dir();set_2_dir();set_3_dir();set_0_dir();
- 334:	8a b3       	in	r24, 0x1a	; 26
- 336:	80 6c       	ori	r24, 0xC0	; 192
- 338:	8a bb       	out	0x1a, r24	; 26
- 33a:	87 b3       	in	r24, 0x17	; 23
- 33c:	88 61       	ori	r24, 0x18	; 24
- 33e:	87 bb       	out	0x17, r24	; 23
- 340:	87 b3       	in	r24, 0x17	; 23
- 342:	80 66       	ori	r24, 0x60	; 96
- 344:	87 bb       	out	0x17, r24	; 23
- 346:	8a b3       	in	r24, 0x1a	; 26
- 348:	80 63       	ori	r24, 0x30	; 48
- 34a:	8a bb       	out	0x1a, r24	; 26
-    set_1_RED();set_2_RED();set_3_RED();set_0_RED();
- 34c:	8b b3       	in	r24, 0x1b	; 27
- 34e:	8f 73       	andi	r24, 0x3F	; 63
- 350:	8b bb       	out	0x1b, r24	; 27
- 352:	df 9a       	sbi	0x1b, 7	; 27
- 354:	88 b3       	in	r24, 0x18	; 24
- 356:	87 7e       	andi	r24, 0xE7	; 231
- 358:	88 bb       	out	0x18, r24	; 24
- 35a:	c4 9a       	sbi	0x18, 4	; 24
- 35c:	88 b3       	in	r24, 0x18	; 24
- 35e:	8f 79       	andi	r24, 0x9F	; 159
- 360:	88 bb       	out	0x18, r24	; 24
- 362:	c6 9a       	sbi	0x18, 6	; 24
- 364:	8b b3       	in	r24, 0x1b	; 27
- 366:	8f 7c       	andi	r24, 0xCF	; 207
- 368:	8b bb       	out	0x1b, r24	; 27
- 36a:	dd 9a       	sbi	0x1b, 5	; 27
- 36c:	08 95       	ret
-
-0000036e <initADC>:
-{
-  // this function initialises the ADC 
-
-  // prescaler set to 128 for mcu running at 8MHz
-
-  ADMUX =
- 36e:	80 ea       	ldi	r24, 0xA0	; 160
- 370:	87 b9       	out	0x07, r24	; 7
-            (1 << ADEN)  |     // Enable ADC 
-            (0 << ADPS2) |     // set prescaler to 2, bit 2 
-            (0 << ADPS1) |     // set prescaler to 2, bit 1 
-            (0 << ADPS0);      // set prescaler to 2, bit 0  
-#else
-  ADCSR = 
- 372:	80 e8       	ldi	r24, 0x80	; 128
- 374:	86 b9       	out	0x06, r24	; 6
- 376:	08 95       	ret
-
-00000378 <getAdc>:
-#endif
-}
-
-unsigned long int getAdc(int channel){
-
-ADMUX =(ADMUX&0xe0)+(channel&0x1f); // Select channel
- 378:	97 b1       	in	r25, 0x07	; 7
- 37a:	8f 71       	andi	r24, 0x1F	; 31
- 37c:	90 7e       	andi	r25, 0xE0	; 224
- 37e:	89 0f       	add	r24, r25
- 380:	87 b9       	out	0x07, r24	; 7
-#ifdef proctiny261
-	ADCSRA |= (1 << ADSC);         // start ADC measurement
-#else
-	ADCSR |= (1 << ADSC);         // start ADC measurement
- 382:	36 9a       	sbi	0x06, 6	; 6
-#endif
-
-#ifdef proctiny261
-	while (ADCSRA & (1 << ADSC) ); // wait till conversion complete 
-#else
-	while (ADCSR & (1 << ADSC) ); // wait till conversion complete 
- 384:	36 99       	sbic	0x06, 6	; 6
- 386:	fe cf       	rjmp	.-4      	; 0x384 <getAdc+0xc>
-#endif
-return (ADCL>>6)+(ADCH<<2); // need to read ADCL FIRST otherwise ADC won't work. says DS.
- 388:	84 b1       	in	r24, 0x04	; 4
- 38a:	65 b1       	in	r22, 0x05	; 5
- 38c:	82 95       	swap	r24
- 38e:	86 95       	lsr	r24
- 390:	86 95       	lsr	r24
- 392:	83 70       	andi	r24, 0x03	; 3
- 394:	70 e0       	ldi	r23, 0x00	; 0
- 396:	66 0f       	add	r22, r22
- 398:	77 1f       	adc	r23, r23
- 39a:	66 0f       	add	r22, r22
- 39c:	77 1f       	adc	r23, r23
- 39e:	68 0f       	add	r22, r24
- 3a0:	71 1d       	adc	r23, r1
- 3a2:	88 27       	eor	r24, r24
- 3a4:	77 fd       	sbrc	r23, 7
- 3a6:	80 95       	com	r24
- 3a8:	98 2f       	mov	r25, r24
-
-}
- 3aa:	08 95       	ret
-
-000003ac <getVCCVolts>:
- 3ac:	60 e0       	ldi	r22, 0x00	; 0
- 3ae:	70 e0       	ldi	r23, 0x00	; 0
- 3b0:	80 e0       	ldi	r24, 0x00	; 0
- 3b2:	90 e0       	ldi	r25, 0x00	; 0
- 3b4:	08 95       	ret
-
-000003b6 <main>:
-led_state logic,rail1,rail2,rail3;
-
-int main(void)
-{
-    const int msecsDelayPost = 10;
-    initADC();
- 3b6:	db df       	rcall	.-74     	; 0x36e <initADC>
-    initLEDs();
- 3b8:	bd df       	rcall	.-134    	; 0x334 <initLEDs>
-    initTimer();
- 3ba:	e1 de       	rcall	.-574    	; 0x17e <initTimer>
-
-
-    while (1) {
-	checkRails();
- 3bc:	3c de       	rcall	.-904    	; 0x36 <checkRails>
-	
-	//setLED(1, YELLOW);
-	setLEDs();
- 3be:	a8 de       	rcall	.-688    	; 0x110 <setLEDs>
+00000254 <derpBlink>:
 	#else
 		//round up by default
 		__ticks_dc = (uint32_t)(ceil(fabs(__tmp)));
 	#endif
 
 	__builtin_avr_delay_cycles(__ticks_dc);
- 3c0:	83 ec       	ldi	r24, 0xC3	; 195
- 3c2:	99 e0       	ldi	r25, 0x09	; 9
- 3c4:	01 97       	sbiw	r24, 0x01	; 1
- 3c6:	f1 f7       	brne	.-4      	; 0x3c4 <main+0xe>
- 3c8:	00 c0       	rjmp	.+0      	; 0x3ca <main+0x14>
- 3ca:	00 00       	nop
- 3cc:	f7 cf       	rjmp	.-18     	; 0x3bc <main+0x6>
+ 254:	2f e9       	ldi	r18, 0x9F	; 159
+ 256:	86 e8       	ldi	r24, 0x86	; 134
+ 258:	91 e0       	ldi	r25, 0x01	; 1
+ 25a:	21 50       	subi	r18, 0x01	; 1
+ 25c:	80 40       	sbci	r24, 0x00	; 0
+ 25e:	90 40       	sbci	r25, 0x00	; 0
+ 260:	e1 f7       	brne	.-8      	; 0x25a <derpBlink+0x6>
+ 262:	00 c0       	rjmp	.+0      	; 0x264 <derpBlink+0x10>
+ 264:	00 00       	nop
 
-000003ce <_exit>:
- 3ce:	f8 94       	cli
+void derpBlink(){
+	while(1){
+		_delay_ms(500);
+		setLED(0,RED);
+ 266:	62 e0       	ldi	r22, 0x02	; 2
+ 268:	70 e0       	ldi	r23, 0x00	; 0
+ 26a:	80 e0       	ldi	r24, 0x00	; 0
+ 26c:	90 e0       	ldi	r25, 0x00	; 0
+ 26e:	0f d0       	rcall	.+30     	; 0x28e <setLED>
+ 270:	2f e9       	ldi	r18, 0x9F	; 159
+ 272:	86 e8       	ldi	r24, 0x86	; 134
+ 274:	91 e0       	ldi	r25, 0x01	; 1
+ 276:	21 50       	subi	r18, 0x01	; 1
+ 278:	80 40       	sbci	r24, 0x00	; 0
+ 27a:	90 40       	sbci	r25, 0x00	; 0
+ 27c:	e1 f7       	brne	.-8      	; 0x276 <derpBlink+0x22>
+ 27e:	00 c0       	rjmp	.+0      	; 0x280 <derpBlink+0x2c>
+ 280:	00 00       	nop
+		_delay_ms(500);
+		setLED(0,GREEN);
+ 282:	61 e0       	ldi	r22, 0x01	; 1
+ 284:	70 e0       	ldi	r23, 0x00	; 0
+ 286:	80 e0       	ldi	r24, 0x00	; 0
+ 288:	90 e0       	ldi	r25, 0x00	; 0
+ 28a:	01 d0       	rcall	.+2      	; 0x28e <setLED>
+	}
+ 28c:	e3 cf       	rjmp	.-58     	; 0x254 <derpBlink>
 
-000003d0 <__stop_program>:
- 3d0:	ff cf       	rjmp	.-2      	; 0x3d0 <__stop_program>
+0000028e <setLED>:
+#include "leds.h"
+#include <avr/io.h>
+
+void setLED(int led, led_state color){
+	switch(led){
+ 28e:	81 30       	cpi	r24, 0x01	; 1
+ 290:	91 05       	cpc	r25, r1
+ 292:	59 f1       	breq	.+86     	; 0x2ea <setLED+0x5c>
+ 294:	1c f4       	brge	.+6      	; 0x29c <setLED+0xe>
+ 296:	89 2b       	or	r24, r25
+ 298:	49 f0       	breq	.+18     	; 0x2ac <setLED+0x1e>
+ 29a:	08 95       	ret
+ 29c:	82 30       	cpi	r24, 0x02	; 2
+ 29e:	91 05       	cpc	r25, r1
+ 2a0:	09 f4       	brne	.+2      	; 0x2a4 <setLED+0x16>
+ 2a2:	41 c0       	rjmp	.+130    	; 0x326 <setLED+0x98>
+ 2a4:	03 97       	sbiw	r24, 0x03	; 3
+ 2a6:	09 f4       	brne	.+2      	; 0x2aa <setLED+0x1c>
+ 2a8:	5c c0       	rjmp	.+184    	; 0x362 <setLED+0xd4>
+ 2aa:	08 95       	ret
+		case 0:
+			switch(color){
+ 2ac:	61 30       	cpi	r22, 0x01	; 1
+ 2ae:	71 05       	cpc	r23, r1
+ 2b0:	81 f0       	breq	.+32     	; 0x2d2 <setLED+0x44>
+ 2b2:	38 f0       	brcs	.+14     	; 0x2c2 <setLED+0x34>
+ 2b4:	62 30       	cpi	r22, 0x02	; 2
+ 2b6:	71 05       	cpc	r23, r1
+ 2b8:	39 f0       	breq	.+14     	; 0x2c8 <setLED+0x3a>
+ 2ba:	63 30       	cpi	r22, 0x03	; 3
+ 2bc:	71 05       	cpc	r23, r1
+ 2be:	71 f0       	breq	.+28     	; 0x2dc <setLED+0x4e>
+ 2c0:	08 95       	ret
+				case OFF: set_0_OFF(); break;
+ 2c2:	8b b3       	in	r24, 0x1b	; 27
+ 2c4:	8f 7c       	andi	r24, 0xCF	; 207
+ 2c6:	0f c0       	rjmp	.+30     	; 0x2e6 <setLED+0x58>
+				case RED: set_0_RED();break;
+ 2c8:	8b b3       	in	r24, 0x1b	; 27
+ 2ca:	8f 7c       	andi	r24, 0xCF	; 207
+ 2cc:	8b bb       	out	0x1b, r24	; 27
+ 2ce:	dd 9a       	sbi	0x1b, 5	; 27
+ 2d0:	08 95       	ret
+				case GREEN: set_0_GRN(); break;
+ 2d2:	8b b3       	in	r24, 0x1b	; 27
+ 2d4:	8f 7c       	andi	r24, 0xCF	; 207
+ 2d6:	8b bb       	out	0x1b, r24	; 27
+ 2d8:	dc 9a       	sbi	0x1b, 4	; 27
+ 2da:	08 95       	ret
+				case YELLOW: set_0_YEL(); break;
+ 2dc:	8b b3       	in	r24, 0x1b	; 27
+ 2de:	8f 7c       	andi	r24, 0xCF	; 207
+ 2e0:	8b bb       	out	0x1b, r24	; 27
+ 2e2:	8b b3       	in	r24, 0x1b	; 27
+ 2e4:	80 63       	ori	r24, 0x30	; 48
+ 2e6:	8b bb       	out	0x1b, r24	; 27
+ 2e8:	08 95       	ret
+			}
+		break;
+		case 1:
+			switch(color){
+ 2ea:	61 30       	cpi	r22, 0x01	; 1
+ 2ec:	71 05       	cpc	r23, r1
+ 2ee:	81 f0       	breq	.+32     	; 0x310 <setLED+0x82>
+ 2f0:	38 f0       	brcs	.+14     	; 0x300 <setLED+0x72>
+ 2f2:	62 30       	cpi	r22, 0x02	; 2
+ 2f4:	71 05       	cpc	r23, r1
+ 2f6:	39 f0       	breq	.+14     	; 0x306 <setLED+0x78>
+ 2f8:	63 30       	cpi	r22, 0x03	; 3
+ 2fa:	71 05       	cpc	r23, r1
+ 2fc:	71 f0       	breq	.+28     	; 0x31a <setLED+0x8c>
+ 2fe:	08 95       	ret
+				case OFF: set_1_OFF(); break;
+ 300:	8b b3       	in	r24, 0x1b	; 27
+ 302:	8f 73       	andi	r24, 0x3F	; 63
+ 304:	f0 cf       	rjmp	.-32     	; 0x2e6 <setLED+0x58>
+				case RED: set_1_RED();break;
+ 306:	8b b3       	in	r24, 0x1b	; 27
+ 308:	8f 73       	andi	r24, 0x3F	; 63
+ 30a:	8b bb       	out	0x1b, r24	; 27
+ 30c:	df 9a       	sbi	0x1b, 7	; 27
+ 30e:	08 95       	ret
+				case GREEN: set_1_GRN(); break;
+ 310:	8b b3       	in	r24, 0x1b	; 27
+ 312:	8f 73       	andi	r24, 0x3F	; 63
+ 314:	8b bb       	out	0x1b, r24	; 27
+ 316:	de 9a       	sbi	0x1b, 6	; 27
+ 318:	08 95       	ret
+				case YELLOW: set_1_YEL(); break;
+ 31a:	8b b3       	in	r24, 0x1b	; 27
+ 31c:	8f 73       	andi	r24, 0x3F	; 63
+ 31e:	8b bb       	out	0x1b, r24	; 27
+ 320:	8b b3       	in	r24, 0x1b	; 27
+ 322:	80 6c       	ori	r24, 0xC0	; 192
+ 324:	e0 cf       	rjmp	.-64     	; 0x2e6 <setLED+0x58>
+			}
+
+		break;
+		case 2:
+			switch(color){
+ 326:	61 30       	cpi	r22, 0x01	; 1
+ 328:	71 05       	cpc	r23, r1
+ 32a:	81 f0       	breq	.+32     	; 0x34c <setLED+0xbe>
+ 32c:	38 f0       	brcs	.+14     	; 0x33c <setLED+0xae>
+ 32e:	62 30       	cpi	r22, 0x02	; 2
+ 330:	71 05       	cpc	r23, r1
+ 332:	39 f0       	breq	.+14     	; 0x342 <setLED+0xb4>
+ 334:	63 30       	cpi	r22, 0x03	; 3
+ 336:	71 05       	cpc	r23, r1
+ 338:	71 f0       	breq	.+28     	; 0x356 <setLED+0xc8>
+ 33a:	08 95       	ret
+				case OFF: set_2_OFF(); break;
+ 33c:	88 b3       	in	r24, 0x18	; 24
+ 33e:	87 7e       	andi	r24, 0xE7	; 231
+ 340:	29 c0       	rjmp	.+82     	; 0x394 <setLED+0x106>
+				case RED: set_2_RED();break;
+ 342:	88 b3       	in	r24, 0x18	; 24
+ 344:	87 7e       	andi	r24, 0xE7	; 231
+ 346:	88 bb       	out	0x18, r24	; 24
+ 348:	c4 9a       	sbi	0x18, 4	; 24
+ 34a:	08 95       	ret
+				case GREEN: set_2_GRN(); break;
+ 34c:	88 b3       	in	r24, 0x18	; 24
+ 34e:	87 7e       	andi	r24, 0xE7	; 231
+ 350:	88 bb       	out	0x18, r24	; 24
+ 352:	c3 9a       	sbi	0x18, 3	; 24
+ 354:	08 95       	ret
+				case YELLOW: set_2_YEL(); break;
+ 356:	88 b3       	in	r24, 0x18	; 24
+ 358:	87 7e       	andi	r24, 0xE7	; 231
+ 35a:	88 bb       	out	0x18, r24	; 24
+ 35c:	88 b3       	in	r24, 0x18	; 24
+ 35e:	88 61       	ori	r24, 0x18	; 24
+ 360:	19 c0       	rjmp	.+50     	; 0x394 <setLED+0x106>
+			}
+		break;
+		case 3:
+			switch(color){
+ 362:	61 30       	cpi	r22, 0x01	; 1
+ 364:	71 05       	cpc	r23, r1
+ 366:	81 f0       	breq	.+32     	; 0x388 <setLED+0xfa>
+ 368:	38 f0       	brcs	.+14     	; 0x378 <setLED+0xea>
+ 36a:	62 30       	cpi	r22, 0x02	; 2
+ 36c:	71 05       	cpc	r23, r1
+ 36e:	39 f0       	breq	.+14     	; 0x37e <setLED+0xf0>
+ 370:	63 30       	cpi	r22, 0x03	; 3
+ 372:	71 05       	cpc	r23, r1
+ 374:	61 f0       	breq	.+24     	; 0x38e <setLED+0x100>
+ 376:	08 95       	ret
+				case OFF: set_3_OFF(); break;
+ 378:	88 b3       	in	r24, 0x18	; 24
+ 37a:	8f 79       	andi	r24, 0x9F	; 159
+ 37c:	0b c0       	rjmp	.+22     	; 0x394 <setLED+0x106>
+				case RED: set_3_RED();break;
+ 37e:	88 b3       	in	r24, 0x18	; 24
+ 380:	8f 79       	andi	r24, 0x9F	; 159
+ 382:	88 bb       	out	0x18, r24	; 24
+ 384:	c6 9a       	sbi	0x18, 6	; 24
+ 386:	08 95       	ret
+				case GREEN: set_3_GRN(); break;
+ 388:	c6 98       	cbi	0x18, 6	; 24
+ 38a:	c5 9a       	sbi	0x18, 5	; 24
+ 38c:	08 95       	ret
+				case YELLOW: set_3_YEL(); break;
+ 38e:	c6 98       	cbi	0x18, 6	; 24
+ 390:	88 b3       	in	r24, 0x18	; 24
+ 392:	80 66       	ori	r24, 0x60	; 96
+ 394:	88 bb       	out	0x18, r24	; 24
+ 396:	08 95       	ret
+
+00000398 <initLEDs>:
+	
+}
+
+
+void initLEDs(){
+    set_1_dir();set_2_dir();set_3_dir();set_0_dir();
+ 398:	8a b3       	in	r24, 0x1a	; 26
+ 39a:	80 6c       	ori	r24, 0xC0	; 192
+ 39c:	8a bb       	out	0x1a, r24	; 26
+ 39e:	87 b3       	in	r24, 0x17	; 23
+ 3a0:	88 61       	ori	r24, 0x18	; 24
+ 3a2:	87 bb       	out	0x17, r24	; 23
+ 3a4:	87 b3       	in	r24, 0x17	; 23
+ 3a6:	80 66       	ori	r24, 0x60	; 96
+ 3a8:	87 bb       	out	0x17, r24	; 23
+ 3aa:	8a b3       	in	r24, 0x1a	; 26
+ 3ac:	80 63       	ori	r24, 0x30	; 48
+ 3ae:	8a bb       	out	0x1a, r24	; 26
+    set_1_RED();set_2_RED();set_3_RED();set_0_RED();
+ 3b0:	8b b3       	in	r24, 0x1b	; 27
+ 3b2:	8f 73       	andi	r24, 0x3F	; 63
+ 3b4:	8b bb       	out	0x1b, r24	; 27
+ 3b6:	df 9a       	sbi	0x1b, 7	; 27
+ 3b8:	88 b3       	in	r24, 0x18	; 24
+ 3ba:	87 7e       	andi	r24, 0xE7	; 231
+ 3bc:	88 bb       	out	0x18, r24	; 24
+ 3be:	c4 9a       	sbi	0x18, 4	; 24
+ 3c0:	88 b3       	in	r24, 0x18	; 24
+ 3c2:	8f 79       	andi	r24, 0x9F	; 159
+ 3c4:	88 bb       	out	0x18, r24	; 24
+ 3c6:	c6 9a       	sbi	0x18, 6	; 24
+ 3c8:	8b b3       	in	r24, 0x1b	; 27
+ 3ca:	8f 7c       	andi	r24, 0xCF	; 207
+ 3cc:	8b bb       	out	0x1b, r24	; 27
+ 3ce:	dd 9a       	sbi	0x1b, 5	; 27
+ 3d0:	08 95       	ret
+
+000003d2 <initADC>:
+{
+  // this function initialises the ADC 
+
+  // prescaler set to 128 for mcu running at 8MHz
+
+  ADMUX =
+ 3d2:	80 ea       	ldi	r24, 0xA0	; 160
+ 3d4:	87 b9       	out	0x07, r24	; 7
+            (1 << ADEN)  |     // Enable ADC 
+            (0 << ADPS2) |     // set prescaler to 2, bit 2 
+            (0 << ADPS1) |     // set prescaler to 2, bit 1 
+            (0 << ADPS0);      // set prescaler to 2, bit 0  
+#else
+  ADCSR = 
+ 3d6:	80 e8       	ldi	r24, 0x80	; 128
+ 3d8:	86 b9       	out	0x06, r24	; 6
+ 3da:	08 95       	ret
+
+000003dc <getAdc>:
+#endif
+}
+
+unsigned long int getAdc(int channel){
+
+ADMUX =(ADMUX&0xe0)+(channel&0x1f); // Select channel
+ 3dc:	97 b1       	in	r25, 0x07	; 7
+ 3de:	8f 71       	andi	r24, 0x1F	; 31
+ 3e0:	90 7e       	andi	r25, 0xE0	; 224
+ 3e2:	89 0f       	add	r24, r25
+ 3e4:	87 b9       	out	0x07, r24	; 7
+#ifdef __AVR_ATtiny261__
+	ADCSRA |= (1 << ADSC);         // start ADC measurement
+#else
+	ADCSR |= (1 << ADSC);         // start ADC measurement
+ 3e6:	36 9a       	sbi	0x06, 6	; 6
+#endif
+
+#ifdef __AVR_ATtiny261__
+	while (ADCSRA & (1 << ADSC) ); // wait till conversion complete 
+#else
+	while (ADCSR & (1 << ADSC) ); // wait till conversion complete 
+ 3e8:	36 99       	sbic	0x06, 6	; 6
+ 3ea:	fe cf       	rjmp	.-4      	; 0x3e8 <getAdc+0xc>
+#endif
+return (ADCL>>6)+(ADCH<<2); // need to read ADCL FIRST otherwise ADC won't work. says DS.
+ 3ec:	84 b1       	in	r24, 0x04	; 4
+ 3ee:	65 b1       	in	r22, 0x05	; 5
+ 3f0:	82 95       	swap	r24
+ 3f2:	86 95       	lsr	r24
+ 3f4:	86 95       	lsr	r24
+ 3f6:	83 70       	andi	r24, 0x03	; 3
+ 3f8:	70 e0       	ldi	r23, 0x00	; 0
+ 3fa:	66 0f       	add	r22, r22
+ 3fc:	77 1f       	adc	r23, r23
+ 3fe:	66 0f       	add	r22, r22
+ 400:	77 1f       	adc	r23, r23
+ 402:	68 0f       	add	r22, r24
+ 404:	71 1d       	adc	r23, r1
+ 406:	88 27       	eor	r24, r24
+ 408:	77 fd       	sbrc	r23, 7
+ 40a:	80 95       	com	r24
+ 40c:	98 2f       	mov	r25, r24
+
+}
+ 40e:	08 95       	ret
+
+00000410 <getVCCVolts>:
+ 410:	60 e0       	ldi	r22, 0x00	; 0
+ 412:	70 e0       	ldi	r23, 0x00	; 0
+ 414:	80 e0       	ldi	r24, 0x00	; 0
+ 416:	90 e0       	ldi	r25, 0x00	; 0
+ 418:	08 95       	ret
+
+0000041a <main>:
+led_state logic,rail1,rail2,rail3;
+
+int main(void)
+{
+    const int msecsDelayPost = 10;
+    initADC();
+ 41a:	db df       	rcall	.-74     	; 0x3d2 <initADC>
+    initLEDs();
+ 41c:	bd df       	rcall	.-134    	; 0x398 <initLEDs>
+
+
+    initTimer();
+ 41e:	af de       	rcall	.-674    	; 0x17e <initTimer>
+
+    while (1) {
+	checkRails();
+ 420:	0a de       	rcall	.-1004   	; 0x36 <checkRails>
+	
+	//setLED(1, YELLOW);
+	setLEDs();
+ 422:	76 de       	rcall	.-788    	; 0x110 <setLEDs>
+ 424:	83 ec       	ldi	r24, 0xC3	; 195
+ 426:	99 e0       	ldi	r25, 0x09	; 9
+ 428:	01 97       	sbiw	r24, 0x01	; 1
+ 42a:	f1 f7       	brne	.-4      	; 0x428 <main+0xe>
+ 42c:	00 c0       	rjmp	.+0      	; 0x42e <main+0x14>
+ 42e:	00 00       	nop
+ 430:	f7 cf       	rjmp	.-18     	; 0x420 <main+0x6>
+
+00000432 <_exit>:
+ 432:	f8 94       	cli
+
+00000434 <__stop_program>:
+ 434:	ff cf       	rjmp	.-2      	; 0x434 <__stop_program>
