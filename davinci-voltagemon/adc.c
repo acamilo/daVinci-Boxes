@@ -38,6 +38,11 @@ void initADC()
 
 unsigned long int getAdc(int channel){
 
+
+	int i=0;
+	long int avg=0;
+	for (i=0; i<1000; i++){
+
 ADMUX =(ADMUX&0xe0)+(channel&0x1f); // Select channel
 #ifdef __AVR_ATtiny261__
 	ADCSRA |= (1 << ADSC);         // start ADC measurement
@@ -50,9 +55,13 @@ ADMUX =(ADMUX&0xe0)+(channel&0x1f); // Select channel
 #else
 	while (ADCSR & (1 << ADSC) ); // wait till conversion complete 
 #endif
-return (ADCL>>6)+(ADCH<<2); // need to read ADCL FIRST otherwise ADC won't work. says DS.
+
+avg = avg+((ADCL>>6)+(ADCH<<2));; // need to read ADCL FIRST otherwise ADC won't work. says DS.
+}
+return avg/1000;
 
 }
+
 
 unsigned long int getVCCVolts(int channel){
 /*

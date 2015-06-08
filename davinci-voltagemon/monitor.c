@@ -24,11 +24,11 @@ int main(void)
 
     while (1) {
 	checkRails();
-	
+		 _delay_ms(10);
 	//setLED(1, YELLOW);
 	setLEDs();
-
 	 _delay_ms(10);
+
 
     }
 
@@ -42,7 +42,7 @@ void checkRails(){
 		else { set_1_GRN();	}
 		*/
 		
-		unsigned long int voltage = getAdc(0);
+		unsigned long int voltage = getAdc(1);
 		voltage = getAdc(0);
 		if (voltage >= rail1_upper) { rail1  = HIGH; }
 		else if ((voltage <rail1_upper) && (voltage >= rail1_lower)) { rail1=NOMINAL; }
@@ -118,6 +118,7 @@ OCR1A = 5;
 
 
    sei();
+
 }
 
 int state=0;
@@ -143,7 +144,6 @@ ISR(TIMER1_CMPA_vect){
 	else {set_2_dir();}
 #endif
 
-	setLED(0,OFF);
 	state = ~state;
 }
 
