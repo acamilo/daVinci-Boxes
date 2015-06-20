@@ -7,7 +7,7 @@ da Vinci Boxes
 |-------|---------|---------|----------|
 |  MTM  | 12v  | 24v  |  12v  |
 |  PSM  | 12v  | 24v  |  x  |
-|  ECM  | 12v  | 32v  |  x  |
+|  ECM  | 12v  | 36v  |  x  |
 
 ## Lights ##
 
