@@ -1,0 +1,15 @@
+Added Component: Designator=R6(14-1210)
+Added Component: Designator=R20(14-1210)
+Added Component: Designator=R21(14-1210)
+Added Pin To Net: NetName=GND Pin=R6-1
+Added Pin To Net: NetName=NetR6_1 Pin=R6-2
+Added Pin To Net: NetName=GND Pin=R20-1
+Added Pin To Net: NetName=NetR20_1 Pin=R20-2
+Added Pin To Net: NetName=GND Pin=R21-1
+Added Pin To Net: NetName=NetR21_1 Pin=R21-2
+Change Net Name : Old Net Name=NetR6_1 New Net Name=NetR6_2
+Change Net Name : Old Net Name=NetR20_1 New Net Name=NetR20_2
+Change Net Name : Old Net Name=NetR21_1 New Net Name=NetR21_2
+Added Member To Class: ClassName=board Member=Component R6 Res3
+Added Member To Class: ClassName=board Member=Component R20 Res3
+Added Member To Class: ClassName=board Member=Component R21 Res3

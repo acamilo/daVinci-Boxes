@@ -1,0 +1,6 @@
+Removed Pin From Net: NetName=VS4 Pin=R20-1
+Removed Pin From Net: NetName=LOGICOK Pin=R20-2
+Removed Pin From Net: NetName=GND Pin=R21-1
+Removed Pin From Net: NetName=VS4 Pin=R21-2
+Removed Member From Class: ClassName=board Member=R20
+Removed Member From Class: ClassName=board Member=R21

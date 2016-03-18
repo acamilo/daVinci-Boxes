@@ -1,0 +1,10 @@
+Change Component DesignItemId : Designator=R6 Old DesignItemId=Res3 New DesignItemId=Res Semi
+Change Component DesignItemId : Designator=R20 Old DesignItemId=Res3 New DesignItemId=Res Semi
+Change Component DesignItemId : Designator=R21 Old DesignItemId=Res3 New DesignItemId=Res Semi
+Change Component Footprint: Designator=SW1 Old Footprint=416131160805 New Footprint=416131160805
+Change Component Comment : Designator=R6 Old Comment=Res3 New Comment=Res Semi
+Change Component Comment : Designator=R20 Old Comment=Res3 New Comment=Res Semi
+Change Component Comment : Designator=R21 Old Comment=Res3 New Comment=Res Semi
+Change Component Description : Designator=R6 Old Description=Resistor New Description=Semiconductor Resistor
+Change Component Description : Designator=R20 Old Description=Resistor New Description=Semiconductor Resistor
+Change Component Description : Designator=R21 Old Description=Resistor New Description=Semiconductor Resistor

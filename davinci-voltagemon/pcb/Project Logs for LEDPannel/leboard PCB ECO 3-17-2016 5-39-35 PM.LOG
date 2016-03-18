@@ -1,0 +1,7 @@
+Removed Pin From Net: NetName=NetR6_2 Pin=S1-1
+Removed Pin From Net: NetName=NetR20_2 Pin=S1-2
+Removed Pin From Net: NetName=NetR21_2 Pin=S1-3
+Removed Pin From Net: NetName=MOSI Pin=S1-4
+Removed Pin From Net: NetName=SCK Pin=S1-5
+Removed Pin From Net: NetName=MISO Pin=S1-6
+Removed Member From Class: ClassName=board Member=S1
